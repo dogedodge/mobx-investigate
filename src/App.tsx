@@ -1,10 +1,13 @@
-import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { observer } from 'mobx-react-lite'
+import { useCounterStore } from './stores/StoreContext'
 
-function App() {
-  const [count, setCount] = useState(0)
+// Use the observer HOC to make the component reactive to changes in the observable state
+const App = observer(() => {
+  // Use our MobX store instead of local state
+  const counterStore = useCounterStore();
 
   return (
     <>
@@ -16,11 +19,17 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>Vite + React + MobX</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+        <div className="counter-buttons">
+          <button onClick={() => counterStore.decrement()}>-</button>
+          <span>Count is {counterStore.count}</span>
+          <button onClick={() => counterStore.increment()}>+</button>
+        </div>
+        <button onClick={() => counterStore.reset()}>Reset</button>
+        <p>
+          Double count: {counterStore.doubleCount} (computed value)
+        </p>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
@@ -30,6 +39,6 @@ function App() {
       </p>
     </>
   )
-}
+})
 
 export default App
