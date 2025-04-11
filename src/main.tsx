@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
-import { StoreProvider } from './stores/StoreContext'
+import { StoreProvider } from './stores/StoreProvider.tsx'
 
 // Configure MobX (optional, but recommended for better debugging)
 import { configure } from 'mobx'
