@@ -5,8 +5,9 @@ import { observer } from "mobx-react-lite";
 import { useCounterStore } from "./stores/StoreContext";
 import { CountView } from "./components/CountView";
 import { ObserverCountView } from "./components/ObserverCountView";
-import { ParamsCountView } from "./components/ParamsCountView";
-import { getCount } from "./utils/getCount";
+import { renderCountView } from "./components/renderCountView";
+// import { ParamsCountView } from "./components/ParamsCountView";
+// import { getCount } from "./utils/getCount";
 
 // Use the observer HOC to make the component reactive to changes in the observable state
 const App = observer(() => {
@@ -28,7 +29,8 @@ const App = observer(() => {
       <h1>Vite + React + MobX</h1>
       <div className="card">
         <CountView></CountView>
-        <ParamsCountView count={getCount(counterStore)}></ParamsCountView>
+        {/* <ParamsCountView count={getCount(counterStore)}></ParamsCountView> */}
+        {renderCountView(counterStore)}
         <ObserverCountView></ObserverCountView>
         <button onClick={() => counterStore.reset()}>Reset</button>
         {/* <p>Double count: {counterStore.doubleCount} (computed value)</p> */}
