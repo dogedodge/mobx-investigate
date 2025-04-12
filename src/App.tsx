@@ -1,13 +1,19 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { observer } from 'mobx-react-lite'
-import { useCounterStore } from './stores/StoreContext'
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import { observer } from "mobx-react-lite";
+import { useCounterStore } from "./stores/StoreContext";
+import { CountView } from "./components/CountView";
+import { ObserverCountView } from "./components/ObserverCountView";
+import { ParamsCountView } from "./components/ParamsCountView";
+import { getCount } from "./utils/getCount";
 
 // Use the observer HOC to make the component reactive to changes in the observable state
 const App = observer(() => {
   // Use our MobX store instead of local state
   const counterStore = useCounterStore();
+
+  console.log("App rendered");
 
   return (
     <>
@@ -21,15 +27,11 @@ const App = observer(() => {
       </div>
       <h1>Vite + React + MobX</h1>
       <div className="card">
-        <div className="counter-buttons">
-          <button onClick={() => counterStore.decrement()}>-</button>
-          <span>Count is {counterStore.count}</span>
-          <button onClick={() => counterStore.increment()}>+</button>
-        </div>
+        <CountView></CountView>
+        <ParamsCountView count={getCount(counterStore)}></ParamsCountView>
+        <ObserverCountView></ObserverCountView>
         <button onClick={() => counterStore.reset()}>Reset</button>
-        <p>
-          Double count: {counterStore.doubleCount} (computed value)
-        </p>
+        {/* <p>Double count: {counterStore.doubleCount} (computed value)</p> */}
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
@@ -38,7 +40,7 @@ const App = observer(() => {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
-})
+  );
+});
 
-export default App
+export default App;
