@@ -5,7 +5,8 @@ import { observer } from "mobx-react-lite";
 import { useCounterStore } from "./stores/StoreContext";
 import { CountView } from "./components/CountView";
 import { ObserverCountView } from "./components/ObserverCountView";
-import { renderCountView } from "./components/renderCountView";
+// import { renderCountView } from "./components/renderCountView";
+import { HookCountView } from "./components/HookCountView";
 // import { ParamsCountView } from "./components/ParamsCountView";
 // import { getCount } from "./utils/getCount";
 
@@ -29,8 +30,9 @@ const App = observer(() => {
       <h1>Vite + React + MobX</h1>
       <div className="card">
         <CountView></CountView>
+        <HookCountView></HookCountView>
         {/* <ParamsCountView count={getCount(counterStore)}></ParamsCountView> */}
-        {renderCountView(counterStore)}
+        {/* {renderCountView(counterStore)} */}
         <ObserverCountView></ObserverCountView>
         <button onClick={() => counterStore.reset()}>Reset</button>
         {/* <p>Double count: {counterStore.doubleCount} (computed value)</p> */}
