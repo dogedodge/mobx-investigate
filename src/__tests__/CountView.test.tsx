@@ -4,7 +4,7 @@ import { StoreProvider } from "../stores/StoreProvider";
 import { ObserverContainer } from "../containers/ObserverContainer";
 
 describe("CountView", () => {
-  it("cannot update correctly without observer", () => {
+  it("update correctly", () => {
     // Arrange
     const { getByText } = render(
       <StoreProvider>
@@ -16,8 +16,9 @@ describe("CountView", () => {
     // Act
     const addBtn = getByText("+");
     fireEvent.click(addBtn);
-    // No update after click button
-    expect(getByText("Count is 0")).toBeInTheDocument();
+    // Update after click button
+    expect(getByText("Count is 1")).toBeInTheDocument();
+    // not trigger parent component re-render
     expect(
       getByText("Parent component has been rendered 1 times.")
     ).toBeInTheDocument();

@@ -1,6 +1,7 @@
+import { observer } from "mobx-react-lite";
 import { useCounterStore } from "../stores/StoreContext";
 
-export const CountView = () => {
+export const CountView = observer(() => {
   const counterStore = useCounterStore();
   return (
     <div className="counter-buttons">
@@ -9,4 +10,4 @@ export const CountView = () => {
       <button onClick={() => counterStore.increment()}>+</button>
     </div>
   );
-};
+});
