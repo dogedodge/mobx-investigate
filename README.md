@@ -1,54 +1,40 @@
-# React + TypeScript + Vite
+# MobX Investigation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Observation
 
-Currently, two official plugins are available:
+### 1. Observer only tracks observable dependencies within the current component scope, without propagating to child components
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Explanation:**
+When wrapping a component with MobX's `observer`, it creates a reactive context that automatically tracks observable property accesses **during the render phase** of that specific component. This tracking mechanism operates at component-level granularity:
 
-## Expanding the ESLint configuration
+- Child components maintain their own independent reactive contexts
+- Parent component's observer won't automatically track observables used in child components
+- To make child components reactive to observable changes, they need to be wrapped with `observer` individually
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Technical Mechanism:**
+MobX uses a dependency tree structure where each observed component maintains its own reaction instance. The tracking occurs through property access interception using ES6 proxies (in modern implementations) or defineProperty (in legacy implementations).
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### 2. Observer tracks synchronous function calls, including custom hooks, within components
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+**Explanation:**
+The `observer` wrapper can detect observable dependencies in synchronous function calls during rendering:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Applies to:
+  - Regular functions called during render
+  - Custom hooks invoked synchronously
+  - Function components called directly in parent's render
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+**Why it works:**
+MobX's reaction system tracks the executing context stack. When a function/hook is called **during the rendering phase**, any observable accessed within that function becomes part of the parent component's dependency list.
+
+**Key limitations:**
+
+- **Async functions:** Observables accessed in `setTimeout`/Promises won't be tracked
+- **Indirect references:** Observable access through closure callbacks requires explicit observation
+
+**Technical Insight:**
+The tracking occurs through MobX's global `trackingDerivation` mechanism. When a reaction (observer component) starts tracking, it sets up a context that collects all observable accesses in the current execution stack.
+
+---
+
+This behavior shows how MobX balances automation with explicit control: automatic tracking within synchronous execution flows, while requiring explicit annotation (`observer`) for component boundaries. Understanding this helps optimize component updates and prevent unnecessary re-renders.
