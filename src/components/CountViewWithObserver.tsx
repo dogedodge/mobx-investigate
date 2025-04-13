@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useCounterStore } from "../stores/StoreContext";
 
-export const ObserverCountView = observer(() => {
+export const CountViewWithObserver = observer(() => {
   const counterStore = useCounterStore();
   return (
     <div className="counter-buttons">

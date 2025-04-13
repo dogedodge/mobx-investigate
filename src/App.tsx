@@ -4,7 +4,7 @@ import "./App.css";
 import { observer } from "mobx-react-lite";
 import { useCounterStore } from "./stores/StoreContext";
 import { CountView } from "./components/CountView";
-import { ObserverCountView } from "./components/ObserverCountView";
+import { CountViewWithObserver } from "./components/CountViewWithObserver";
 // import { renderCountView } from "./components/renderCountView";
 import { HookCountView } from "./components/HookCountView";
 // import { ParamsCountView } from "./components/ParamsCountView";
@@ -33,7 +33,7 @@ const App = observer(() => {
         <HookCountView></HookCountView>
         {/* <ParamsCountView count={getCount(counterStore)}></ParamsCountView> */}
         {/* {renderCountView(counterStore)} */}
-        <ObserverCountView></ObserverCountView>
+        <CountViewWithObserver></CountViewWithObserver>
         <button onClick={() => counterStore.reset()}>Reset</button>
         {/* <p>Double count: {counterStore.doubleCount} (computed value)</p> */}
         <p>
