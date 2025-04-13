@@ -1,6 +1,6 @@
 import { useCounterStore } from "../stores/StoreContext";
 
-export const ParamsCountView = ({ count }: { count: number }) => {
+export const CountViewWithParams = ({ count }: { count: number }) => {
   const counterStore = useCounterStore();
   return (
     <div className="counter-buttons">

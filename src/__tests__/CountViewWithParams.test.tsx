@@ -1,15 +1,19 @@
 import { render, fireEvent } from "@testing-library/react";
 import { StoreProvider } from "../stores/StoreProvider";
-
-import { renderCountView } from "../components/renderCountView";
+// import { renderCountView } from "../components/renderCountView";
 import { ObserverContainerWithChildFn } from "../containers/ObserverContainerWithChildFn";
+import { CountViewWithParams } from "../components/CountViewWithParams";
 
-describe("renderCountView", () => {
+describe("CountViewWithParams", () => {
   it("update correctly", () => {
     // Arrange
     const { getByText } = render(
       <StoreProvider>
-        <ObserverContainerWithChildFn childFn={renderCountView} />
+        <ObserverContainerWithChildFn
+          childFn={(store) => (
+            <CountViewWithParams count={store.count}></CountViewWithParams>
+          )}
+        />
       </StoreProvider>
     );
     // Act
