@@ -6,7 +6,7 @@ import { useCounterStore } from "./stores/StoreContext";
 import { CountViewWithoutObserver } from "./components/CountViewWithoutObserver";
 import { CountView } from "./components/CountView";
 // import { renderCountView } from "./components/renderCountView";
-import { HookCountView } from "./components/HookCountView";
+import { CountViewWithHook } from "./components/CountViewWithHook";
 // import { ParamsCountView } from "./components/ParamsCountView";
 // import { getCount } from "./utils/getCount";
 
@@ -30,7 +30,7 @@ const App = observer(() => {
       <h1>Vite + React + MobX</h1>
       <div className="card">
         <CountViewWithoutObserver></CountViewWithoutObserver>
-        <HookCountView></HookCountView>
+        <CountViewWithHook></CountViewWithHook>
         {/* <ParamsCountView count={getCount(counterStore)}></ParamsCountView> */}
         {/* {renderCountView(counterStore)} */}
         <CountView></CountView>

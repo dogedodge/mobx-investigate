@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useGetCount } from "../hooks/useGetCount";
 import { useCounterStore } from "../stores/StoreContext";
 
-export const HookCountView = observer(() => {
+export const CountViewWithHook = observer(() => {
   const counterStore = useCounterStore();
   const count = useGetCount();
   return (
