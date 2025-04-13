@@ -3,10 +3,11 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import { observer } from "mobx-react-lite";
 import { useCounterStore } from "./stores/StoreContext";
-import { CountViewWithoutObserver } from "./components/CountViewWithoutObserver";
+// import { CountViewWithoutObserver } from "./components/CountViewWithoutObserver";
 import { CountView } from "./components/CountView";
 // import { renderCountView } from "./components/renderCountView";
-import { CountViewWithHook } from "./components/CountViewWithHook";
+// import { CountViewWithHook } from "./components/CountViewWithHook";
+// import { CountViewWithParams } from "./components/CountViewWithParams";
 // import { ParamsCountView } from "./components/ParamsCountView";
 // import { getCount } from "./utils/getCount";
 
@@ -29,9 +30,9 @@ const App = observer(() => {
       </div>
       <h1>Vite + React + MobX</h1>
       <div className="card">
-        <CountViewWithoutObserver></CountViewWithoutObserver>
-        <CountViewWithHook></CountViewWithHook>
-        {/* <ParamsCountView count={getCount(counterStore)}></ParamsCountView> */}
+        {/* <CountViewWithoutObserver></CountViewWithoutObserver> */}
+        {/* <CountViewWithHook></CountViewWithHook> */}
+        {/* <CountViewWithParams count={getCount(counterStore)}></CountViewWithParams> */}
         {/* {renderCountView(counterStore)} */}
         <CountView></CountView>
         <button onClick={() => counterStore.reset()}>Reset</button>
